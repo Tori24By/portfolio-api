@@ -22,4 +22,15 @@ public class ProjectHighlightController {
     public ProjectHighlight criar(@RequestBody ProjectHighlight highlight) {
         return repository.save(highlight);
     }
+
+    @PutMapping("/{id}")
+    public ProjectHighlight atualizar(@PathVariable Integer id, @RequestBody ProjectHighlight highlightAtualizado) {
+        return repository.findById(id).map(existente -> {
+            existente.setDescription(highlightAtualizado.getDescription());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("Destaque não encontrado: " + id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Integer id) { repository.deleteById(id); }
 }

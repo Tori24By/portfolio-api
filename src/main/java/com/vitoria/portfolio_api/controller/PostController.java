@@ -23,4 +23,21 @@ public class PostController {
     public Post criar(@RequestBody Post post) {
         return repository.save(post);
     }
+
+    @PutMapping("/{id}")
+    public Post atualizar(@PathVariable Integer id, @RequestBody Post postAtualizado) {
+        return repository.findById(id).map(existente -> {
+            existente.setPlatform(postAtualizado.getPlatform());
+            existente.setTitle(postAtualizado.getTitle());
+            existente.setDescription(postAtualizado.getDescription());
+            existente.setPublish_date(postAtualizado.getPublish_date());
+            existente.setUrl_link(postAtualizado.getUrl_link());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("Post não encontrado com o ID: " + id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Integer id) {
+        repository.deleteById(id);
+    }
 }

@@ -22,4 +22,15 @@ public class PostTagController {
     public PostTag criar(@RequestBody PostTag tag) {
         return repository.save(tag);
     }
+
+    @PutMapping("/{id}")
+    public PostTag atualizar(@PathVariable Integer id, @RequestBody PostTag tagAtualizada) {
+        return repository.findById(id).map(existente -> {
+            existente.setTag_name(tagAtualizada.getTag_name());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("Tag de post não encontrada: " + id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Integer id) { repository.deleteById(id); }
 }

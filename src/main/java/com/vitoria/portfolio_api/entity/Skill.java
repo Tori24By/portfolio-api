@@ -20,4 +20,8 @@ public class Skill {
     @ManyToOne
     @JoinColumn(name = "fk_category")
     private SkillCategory category;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

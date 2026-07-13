@@ -22,4 +22,16 @@ public class SkillItemController {
     public Skill criar(@RequestBody Skill skill) {
         return repository.save(skill);
     }
+
+    @PutMapping("/{id}")
+    public Skill atualizar(@PathVariable Integer id, @RequestBody Skill skillAtualizada) {
+        return repository.findById(id).map(existente -> {
+            existente.setName(skillAtualizada.getName());
+            existente.setPercentage(skillAtualizada.getPercentage());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("Skill não encontrada: " + id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Integer id) { repository.deleteById(id); }
 }

@@ -19,4 +19,8 @@ public class SkillCategory {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Skill> skills;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

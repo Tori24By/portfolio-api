@@ -19,6 +19,10 @@ public class Project {
     private String type;
     private String about;
     private String image_url;
+    private String short_description;
+    private Boolean featured;
+    private String live_url;
+    private String repo_url;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectHighlight> highlights;

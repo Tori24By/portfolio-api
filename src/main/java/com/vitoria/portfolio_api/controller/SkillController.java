@@ -23,4 +23,17 @@ public class SkillController {
     public SkillCategory criarCategoria(@RequestBody SkillCategory category) {
         return repository.save(category);
     }
+
+    @PutMapping("/{id}")
+    public SkillCategory atualizar(@PathVariable Integer id, @RequestBody SkillCategory categoriaAtualizada) {
+        return repository.findById(id).map(existente -> {
+            existente.setName(categoriaAtualizada.getName());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("Categoria não encontrada com o ID: " + id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Integer id) {
+        repository.deleteById(id);
+    }
 }

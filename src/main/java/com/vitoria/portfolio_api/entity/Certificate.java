@@ -24,4 +24,8 @@ public class Certificate {
     private LocalDate end_date;
 
     private String image_url;
+
+    private Integer hours;
+
+    private String credential_url;
 }

@@ -22,4 +22,17 @@ public class InfoCardController {
     public InfoCard criar(@RequestBody InfoCard infoCard) {
         return repository.save(infoCard);
     }
+
+    @PutMapping("/{id}")
+    public InfoCard atualizar(@PathVariable Integer id, @RequestBody InfoCard infoCardAtualizado) {
+        return repository.findById(id).map(existente -> {
+            existente.setTitle(infoCardAtualizado.getTitle());
+            existente.setDescription(infoCardAtualizado.getDescription());
+            existente.setIcon(infoCardAtualizado.getIcon());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("InfoCard não encontrado: " + id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Integer id) { repository.deleteById(id); }
 }

@@ -23,4 +23,20 @@ public class CurrentStudyController {
     public CurrentStudy criar(@RequestBody CurrentStudy study) {
         return repository.save(study);
     }
+
+    @PutMapping("/{id}")
+    public CurrentStudy atualizar(@PathVariable Integer id, @RequestBody CurrentStudy estudoAtualizado) {
+        return repository.findById(id).map(existente -> {
+            existente.setCategory(estudoAtualizado.getCategory());
+            existente.setTitle(estudoAtualizado.getTitle());
+            existente.setDescription(estudoAtualizado.getDescription());
+            existente.setPercentage_progress(estudoAtualizado.getPercentage_progress());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("Estudo não encontrado com o ID: " + id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Integer id) {
+        repository.deleteById(id);
+    }
 }
