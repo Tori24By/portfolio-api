@@ -1,5 +1,6 @@
 package com.vitoria.portfolio_api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,16 +8,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Projects_Highlights")
+@Table(name = "projects_highlights")
 public class ProjectHighlight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pk_highlight;
 
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "fk_project")
+    @JoinColumn(name = "fk_project", nullable = false)
+    @JsonIgnoreProperties({"highlights", "technologies"})
     private Project project;
 }

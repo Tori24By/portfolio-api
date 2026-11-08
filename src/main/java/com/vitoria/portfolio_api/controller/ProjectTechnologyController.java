@@ -1,8 +1,10 @@
 package com.vitoria.portfolio_api.controller;
+
 import com.vitoria.portfolio_api.entity.ProjectTechnology;
 import com.vitoria.portfolio_api.repository.ProjectTechnologyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -26,11 +28,13 @@ public class ProjectTechnologyController {
     @PutMapping("/{id}")
     public ProjectTechnology atualizar(@PathVariable Integer id, @RequestBody ProjectTechnology techAtualizada) {
         return repository.findById(id).map(existente -> {
-            existente.setTech_name(techAtualizada.getTech_name());
+            existente.setTechnology(techAtualizada.getTechnology());
             return repository.save(existente);
         }).orElseThrow(() -> new RuntimeException("Tecnologia do projeto não encontrada: " + id));
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Integer id) { repository.deleteById(id); }
+    public void deletar(@PathVariable Integer id) {
+        repository.deleteById(id);
+    }
 }
