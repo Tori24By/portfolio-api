@@ -1,8 +1,10 @@
 package com.vitoria.portfolio_api.controller;
+
 import com.vitoria.portfolio_api.entity.PostTag;
 import com.vitoria.portfolio_api.repository.PostTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -26,11 +28,13 @@ public class PostTagController {
     @PutMapping("/{id}")
     public PostTag atualizar(@PathVariable Integer id, @RequestBody PostTag tagAtualizada) {
         return repository.findById(id).map(existente -> {
-            existente.setTag_name(tagAtualizada.getTag_name());
+            existente.setTag(tagAtualizada.getTag());
             return repository.save(existente);
         }).orElseThrow(() -> new RuntimeException("Tag de post não encontrada: " + id));
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Integer id) { repository.deleteById(id); }
+    public void deletar(@PathVariable Integer id) {
+        repository.deleteById(id);
+    }
 }
